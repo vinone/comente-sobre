@@ -7,6 +7,9 @@
 </head>
 <body>
 	<div class="container">
+		<div class="row-fluid span4">
+			&nbsp;
+		</div>
 		<h1>Quero comentar sobre...</h1>
 		<div class="row-fluid input-append">
 			<input type="text" name="comentario.assunto" id="assunto-js" placeholder="digite um assunto..." class="input-xxlarge">	

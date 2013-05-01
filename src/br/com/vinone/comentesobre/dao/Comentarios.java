@@ -24,8 +24,8 @@ public class Comentarios implements ComentarioDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comentario> ConsultarPorAssunto(String assunto) {
-		return (List<Comentario>) this._session
+		return this._session
 				.createCriteria(Comentario.class)
-					.add(Restrictions.ilike("assunto","%" + assunto + "%"));
+					.add(Restrictions.ilike("assunto","%" + assunto + "%")).list();
 	}
 }
