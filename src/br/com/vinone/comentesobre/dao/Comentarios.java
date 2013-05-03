@@ -1,8 +1,13 @@
 package br.com.vinone.comentesobre.dao;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.vinone.comentesobre.model.Comentario;
@@ -24,8 +29,12 @@ public class Comentarios implements ComentarioDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comentario> ConsultarPorAssunto(String assunto) {
-		return this._session
-				.createCriteria(Comentario.class)
-					.add(Restrictions.ilike("assunto","%" + assunto + "%")).list();
+		String expressao = "SELECT c FROM Comentario c WHERE c.assunto like :assunto";
+		
+		List<Comentario> comentarios = this._session
+				.createQuery(expressao)
+					.setParameter("assunto", assunto + "%").list();
+		
+		return comentarios;
 	}
 }

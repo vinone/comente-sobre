@@ -28,8 +28,4 @@ public class Autor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public Boolean isValidState(){
-		return getEmail().isEmpty();
-	}
 }

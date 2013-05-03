@@ -26,27 +26,38 @@ public class ComentarioController {
 	@Path("/{comentario.assunto}")
 	public void comentar(Comentario comentario){
 		String assunto = comentario.getAssunto();
-		
 		result.include("assunto", assunto);
+	}
+	
+	@Get("/listar/{assunto}")
+	public void listar(String assunto){
+		List<Comentario> comentarios = dataAccess
+				.ConsultarPorAssunto(assunto);
 		
-		List<Comentario> comentarios = dataAccess.ConsultarPorAssunto(assunto);
-		result.include("comentarios",comentarios);
+		result.use(Results.json())
+				.from(comentarios).include("autor")
+					.serialize();
 	}
 	
 	@Path("/")
 	public void index() {
 	}
 	
+	//Não consegui fazer funcionar para aceitar a mesma url no post
+	//Por isso ficou "/salvar" para conseguir salvar
 	@Post("/salvar")
-	public void salvar(Comentario comentario){
+	public void comentar(Comentario comentario,Autor autor){
+		String message = "";
 		try{
+			comentario.setAutor(autor);
 			dataAccess.Comentar(comentario);
+			message = "{ message: 'obrigado por compartilhar!', type: 'success'}";
 		}catch(Exception exception){
-			result.include("error-message", exception.getMessage());
+			message = "{ message: '" + exception.getMessage() + "', type: 'error'}";
 		}finally{
-			result.use(Results.logic())
-				.redirectTo(ComentarioController.class)
-					.comentar(comentario);
+			result.use(Results.json())
+			.withoutRoot()
+				.from(message).serialize();
 		}
 	}
 }

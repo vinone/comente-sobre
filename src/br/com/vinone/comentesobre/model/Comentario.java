@@ -1,12 +1,13 @@
 package br.com.vinone.comentesobre.model;	
 
 import org.apache.taglibs.standard.tag.common.core.NullAttributeException;
+
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
 
 @Entity
 public class Comentario {
@@ -18,7 +19,7 @@ public class Comentario {
 	@NotNull
 	private String assunto;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Autor autor;
 	
 	@NotNull
@@ -48,8 +49,9 @@ public class Comentario {
 	}
 	
 	public void setAutor(Autor autor) throws NullAttributeException {
-		if(autor.isValidState())
+		if(autor == null)
 			atributoNullException("autor");
+
 		this.autor = autor;
 	}
 	

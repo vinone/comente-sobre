@@ -6,19 +6,15 @@
 <hibernate-configuration>
 
 	<session-factory>
-	
-        <!-- Database connection settings -->
         <property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
-        <property name="connection.url">jdbc:hsqldb:hsql://localhost:9001/testDB</property>
+        <property name="connection.url">jdbc:hsqldb:hsql://localhost:9001/comentesobre</property>
         <property name="connection.username">sa</property>
         <property name="connection.password"></property>
         <property name="connection.pool_size">10</property>
-        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
         <property name="current_session_context_class">thread</property>
-        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+        <property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
         <property name="show_sql">true</property>
-
-        <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
  		<mapping class="br.com.vinone.comentesobre.model.Comentario" />
